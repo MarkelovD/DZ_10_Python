@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 import datetime
 
-bot = telebot.TeleBot("5610086366:AAHdmjncYgNsIcP3NWhUbRnCtbfsuRUy4t0") # токен бота
+bot = telebot.TeleBot("token") # токен бота
 
 typeNums = 0
 
