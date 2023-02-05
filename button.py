@@ -1,5 +1,6 @@
 import telebot
 from telebot import types
+import datetime
 
 bot = telebot.TeleBot("5610086366:AAHdmjncYgNsIcP3NWhUbRnCtbfsuRUy4t0") # токен бота
 
@@ -31,6 +32,7 @@ def buttons(message):
 def controller(message):
     collection = ["+","-","*","/","%"]
     vir = message.text
+    write_log(message)
     for i in vir:
         if "//" in vir:
             razd = "//"
@@ -55,6 +57,7 @@ def controller(message):
         res = div_nums(a, b)
     elif typeNums == 1 and (znak == '//' or znak == '%'):
         bot.send_message(message.chat.id, f'Неверный ввод, повторите')
+        write_log(message)
         bot.register_next_step_handler(message, controller)
         return
     elif znak == '//':
@@ -62,6 +65,7 @@ def controller(message):
     elif znak == '%':
         res = div_rem(a, b)
     bot.send_message(message.chat.id, str(res))
+    calc(message)
 
 def summ_nums(a, b):
     return a + b
@@ -85,4 +89,8 @@ def div_int(a, b):
 def div_rem(a, b):
     return a % b
 
+def write_log(message):
+    file = open("log.txt", "a+",encoding="utf-8" )
+    file.write(f"| Name: {message.from_user.first_name} | Last_name: {message.from_user.last_name} | time: {datetime.datetime.now()} | message: {message.text} |\n")
+    file.close()
 bot.infinity_polling()
